@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Propuesta de valor · Marca Demo</title>
+<!--
+  HOJA BASE A4 PARA LA PROPUESTA DE VALOR (genérica). Un solo archivo, sin recursos externos.
+  Generar el PDF con:  scripts/render-pdf.sh propuesta-de-valor.html propuesta-de-valor.pdf [--prev version-anterior.pdf]
+
+  Convenciones del documento
+  - <span class="src">p. N</span>  = referencia a la fuente de la verdad (página, sección o URL corta). Si el dato es de otra fuente,
+                                     la fuente se nombra en la misma etiqueta: <span class="src">Doc. B p. 4</span>.
+  - <span class="inf">inferido</span> = interpretación nuestra que ninguna fuente dice. Nunca se esconde.
+  - <p class="note"> = hueco [A CONSEGUIR] o advertencia (datos de demostración, decisión pendiente).
+  - Tablas: la columna de páginas/fuentes es angosta (.pg, white-space: nowrap); si se ensancha rompe las filas.
+  - Cada sección grande empieza en página nueva (section.page). Tarjetas y filas con break-inside: avoid.
+  Después de generar: contar páginas y líneas por página; una página casi vacía se arregla acortando, no se acepta.
+-->
+<style>
+  :root {
+    --ink: #16201f; --ink-2: #2f3a38; --muted: #5d6866;
+    --line: #dde3e1; --line-2: #eef1f0; --paper: #fff; --tint: #f5f7f6;
+    --accent: #0f6b66; --accent-ink: #0b4f4b; --accent-tint: #e4f0ee;
+    --warn: #a64a17; --warn-tint: #fbefe7; --dark: #1a1d1c;
+    --sans: "Avenir Next", "Avenir", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --serif: "Charter", "Iowan Old Style", Georgia, serif;
+    --mono: "Menlo", "SF Mono", ui-monospace, monospace;
+  }
+  @page {
+    size: A4;
+    margin: 17mm 16mm 18mm 16mm;
+    @bottom-left { content: "Marca Demo · Propuesta de valor · AAAA-MM-DD"; font-family: "Avenir Next", Helvetica, sans-serif; font-size: 7.5pt; color: #7a8482; }
+    @bottom-right { content: counter(page) " / " counter(pages); font-family: "Avenir Next", Helvetica, sans-serif; font-size: 7.5pt; color: #7a8482; }
+  }
+  @page :first { margin: 0; @bottom-left { content: none; } @bottom-right { content: none; } }
+
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: 9.4pt; line-height: 1.45; font-feature-settings: "kern", "liga"; }
+  p { margin: 0 0 2.2mm; }
+  strong { font-weight: 600; }
+  code, .mono { font-family: var(--mono); font-size: 0.86em; }
+
+  /* Portada */
+  .cover { height: 297mm; width: 210mm; padding: 24mm 20mm 20mm; display: flex; flex-direction: column; background: var(--dark); color: #f2f4f3; break-after: page; overflow: hidden; }
+  .cover .kicker { font-size: 8pt; letter-spacing: .22em; text-transform: uppercase; color: #8fd1c8; font-weight: 600; }
+  .cover .rule { height: 1.2mm; width: 28mm; background: #2bb3a6; margin: 8mm 0 0; }
+  .cover h1 { font-size: 50pt; line-height: 1; letter-spacing: -.02em; margin: 58mm 0 0; font-weight: 600; }
+  .cover .sub { font-family: var(--serif); font-size: 21pt; line-height: 1.2; margin: 4mm 0 0; color: #cfe7e3; font-style: italic; }
+  .cover .lede { max-width: 128mm; margin-top: 12mm; font-size: 11pt; line-height: 1.5; color: #c9d0ce; }
+  .cover .parts { margin-top: 14mm; display: flex; gap: 2mm; flex-wrap: wrap; }
+  .cover .parts span { border: .3mm solid #3d4644; border-radius: 10mm; padding: 1.4mm 3.6mm; font-size: 8.4pt; color: #d7dedc; }
+  .cover .parts span i { font-style: normal; color: #2bb3a6; font-family: var(--mono); margin-right: 1.5mm; }
+  .cover .meta { margin-top: auto; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6mm; border-top: .3mm solid #3a403e; padding-top: 6mm; font-size: 8.4pt; color: #aab3b1; }
+  .cover .meta b { display: block; color: #f2f4f3; font-weight: 600; font-size: 9.4pt; margin-top: 1mm; }
+
+  /* Estructura */
+  section.page { break-before: page; }
+  .eyebrow { font-size: 7.6pt; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin: 0 0 1.5mm; }
+  h2 { font-size: 21pt; line-height: 1.12; letter-spacing: -.012em; margin: 0 0 3mm; font-weight: 600; break-after: avoid; }
+  h3 { font-size: 11.5pt; margin: 5mm 0 2mm; font-weight: 600; break-after: avoid; }
+  .intro { color: var(--ink-2); font-size: 10.2pt; max-width: 160mm; margin-bottom: 5mm; }
+
+  /* Etiquetas de fuente e inferencia */
+  .src { display: inline-block; font-family: var(--mono); font-size: 7pt; color: var(--accent-ink); background: var(--accent-tint); border-radius: 1mm; padding: .1mm 1.2mm; white-space: nowrap; vertical-align: .06em; line-height: 1.5; }
+  .inf { display: inline-block; font-size: 6.8pt; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--warn); background: var(--warn-tint); border-radius: 1mm; padding: .2mm 1.3mm; vertical-align: .1em; white-space: nowrap; }
+
+  /* Statement */
+  .statement { background: var(--dark); color: #f4f6f5; border-radius: 2.5mm; padding: 7mm 8mm 6.5mm; margin: 0 0 5mm; break-inside: avoid; }
+  .statement .label { font-size: 7.4pt; letter-spacing: .2em; text-transform: uppercase; color: #8fd1c8; font-weight: 600; margin-bottom: 2.5mm; }
+  .statement p { font-family: var(--serif); font-size: 15.5pt; line-height: 1.32; margin: 0; }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; }
+  .card { border: .3mm solid var(--line); border-radius: 2mm; padding: 4.2mm 4.6mm 3.6mm; background: var(--paper); break-inside: avoid; }
+  .card.tint { background: var(--tint); border-color: var(--line-2); }
+  .card .k { font-size: 7.4pt; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 1.6mm; }
+  .card .k.accent { color: var(--accent); } .card .k.warn { color: var(--warn); }
+  .jtbd { font-family: var(--serif); font-style: italic; font-size: 11.6pt; line-height: 1.38; margin: 0; }
+  ol.tight, ul.tight { margin: 0; padding-left: 4.6mm; }
+  ol.tight li, ul.tight li { margin: 0 0 1.6mm; padding-left: .6mm; }
+  ol.tight li::marker, ul.tight li::marker { color: var(--accent); font-weight: 600; }
+  .pain li::marker { color: var(--warn) !important; }
+
+  .callout { border-left: 1.2mm solid var(--accent); background: var(--accent-tint); padding: 3.6mm 4.6mm; border-radius: 0 2mm 2mm 0; margin: 4mm 0 0; break-inside: avoid; }
+  .callout .k { font-size: 7.4pt; letter-spacing: .16em; text-transform: uppercase; color: var(--accent-ink); font-weight: 600; margin-bottom: 1.2mm; }
+  .callout p:last-child { margin: 0; }
+  .note { border: .3mm dashed #d9b9a5; background: #fdf8f4; color: #5a4335; border-radius: 2mm; padding: 3mm 4mm; font-size: 8.4pt; margin-top: 4mm; break-inside: avoid; }
+  .note b { color: var(--warn); }
+
+  /* Cabecera de cada una de las 6 partes */
+  .part { display: grid; grid-template-columns: 17mm 1fr; gap: 4mm; align-items: start; margin: 0 0 3mm; break-after: avoid; break-inside: avoid; }
+  .part .n { font-family: var(--mono); font-size: 22pt; line-height: 1; color: var(--accent); border-top: .9mm solid var(--accent); padding-top: 2mm; }
+  .part .t { border-top: .3mm solid var(--line); padding-top: 2mm; }
+  .part .t .en { font-size: 7.6pt; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+  .part .t h3 { margin: .6mm 0 0; font-size: 15pt; }
+  .part-body { margin-left: 21mm; }
+  .block { margin-bottom: 6mm; }
+  .colophon { margin-top: 4mm; font-size: 7.8pt; color: var(--muted); line-height: 1.5; }
+  .colophon .src, .colophon .inf { margin-right: .8mm; }
+
+  /* Tablas */
+  table { width: 100%; border-collapse: collapse; font-size: 8.4pt; line-height: 1.38; margin: 1mm 0 2mm; }
+  thead { display: table-header-group; }
+  th { text-align: left; font-size: 7.2pt; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; background: var(--tint); padding: 1.6mm 2.4mm; border-bottom: .3mm solid var(--line); }
+  td { padding: 1.7mm 2.4mm; border-bottom: .25mm solid var(--line); vertical-align: top; }
+  tr { break-inside: avoid; }
+  td.pg { white-space: nowrap; width: 1%; }   /* columna de fuentes: angosta; si se ensancha rompe las filas */
+  td.lead { font-weight: 600; }
+  .w30 { width: 30%; } .w25 { width: 25%; } .w22 { width: 22%; } .w35 { width: 35%; } .w40 { width: 40%; }
+
+  /* Mensajes clave */
+  .msg { display: grid; grid-template-columns: 11mm 1fr; gap: 3.5mm; border: .3mm solid var(--line); border-radius: 2mm; padding: 4.2mm 4.6mm; margin-bottom: 3.2mm; break-inside: avoid; }
+  .msg .num { font-family: var(--mono); font-size: 15pt; color: var(--accent); line-height: 1; padding-top: .8mm; }
+  .msg h4 { font-size: 13.5pt; line-height: 1.22; margin: 0 0 2mm; font-weight: 600; }
+  .msg .proof { font-size: 8.8pt; color: var(--ink-2); }
+  .msg .proof b { font-size: 7.2pt; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-right: 1.5mm; }
+  .pos { font-family: var(--serif); font-size: 11.4pt; line-height: 1.48; margin: 0; }
+  .legend { display: flex; gap: 5mm; flex-wrap: wrap; font-size: 8pt; color: var(--muted); margin-top: 2mm; }
+</style>
+</head>
+<body>
+
+<!-- PORTADA -->
+<div class="cover">
+  <div class="kicker">Documento de trabajo · Marketing · AAAA-MM</div>
+  <div class="rule"></div>
+  <h1>Marca Demo</h1>
+  <div class="sub">Propuesta de valor</div>
+  <p class="lede">Una frase que dice qué hace Producto X, para quién y qué cambia. Construida con la plantilla JTBD de seis partes a partir de la fuente de la verdad indicada abajo.</p>
+  <div class="parts">
+    <span><i>1</i>Quién</span><span><i>2</i>Por qué</span><span><i>3</i>Qué hacen hoy</span><span><i>4</i>Cómo lo resuelve</span><span><i>5</i>Qué pasa después</span><span><i>6</i>Alternativas</span>
+  </div>
+  <div class="meta">
+    <div>Fuente de la verdad<b>[nombre del documento o sitio]</b></div>
+    <div>Segmento principal<b>[segmento líder]</b></div>
+    <div>Estado<b>Borrador para validar</b></div>
+  </div>
+</div>
+
+<!-- EN UNA PÁGINA -->
+<section class="page">
+  <p class="eyebrow">Resumen</p>
+  <h2>En una página</h2>
+  <p class="intro">Qué es Producto X, para quién, qué problema resuelve y por qué es distinto, en cinco líneas que se pueden leer de pie.</p>
+  <div class="statement">
+    <div class="label">Value proposition statement</div>
+    <p>Para [quién] que necesita [trabajo a resolver], Producto X es [categoría] que [beneficio principal]. A diferencia de [alternativa principal], [diferencial verificable].</p>
+  </div>
+  <div class="grid-2">
+    <div class="card"><div class="k accent">Quién</div><p>Segmento líder y variante, en una línea. <span class="src">p. 3</span></p></div>
+    <div class="card"><div class="k warn">Problema</div><p>El trabajo o dolor que resuelve. <span class="src">p. 5</span></p></div>
+    <div class="card"><div class="k accent">Cómo</div><p>El mecanismo, en lenguaje de cliente. <span class="src">p. 8</span></p></div>
+    <div class="card"><div class="k accent">Resultado</div><p>Qué cambia, sin prometer cifras. <span class="inf">inferido</span></p></div>
+  </div>
+  <p class="note"><b>Datos de demostración.</b> Si algún dato de la fuente es de ejemplo, se rotula así en cada pieza donde aparece. No hay clientes, testimonios ni métricas de resultado salvo que la fuente los traiga. <b>[A CONSEGUIR]</b></p>
+</section>
+
+<!-- PARTES 1 y 2 -->
+<section class="page">
+  <p class="eyebrow">Segmento principal · [nombre]</p>
+  <div class="block">
+    <div class="part"><div class="n">1</div><div class="t"><div class="en">Who</div><h3>Para quién</h3></div></div>
+    <div class="part-body">
+      <p class="jtbd">«Cuando [situación], quiero [motivación] para poder [resultado esperado].»</p>
+      <h3>Perfil</h3>
+      <ul class="tight"><li>Característica 1 del segmento. <span class="src">p. 3</span></li><li>Característica 2 del segmento. <span class="src">p. 14</span></li><li>Quién compra y quién usa, si son personas distintas. <span class="inf">inferido</span></li></ul>
+    </div>
+  </div>
+  <div class="block">
+    <div class="part"><div class="n">2</div><div class="t"><div class="en">Why</div><h3>Problema y trabajo a resolver</h3></div></div>
+    <div class="part-body">
+      <ul class="tight pain"><li>Dolor 1 con su consecuencia. <span class="src">p. 5</span></li><li>Dolor 2 con su consecuencia. <span class="src">p. 5</span></li><li>Dolor 3 con su consecuencia. <span class="inf">inferido</span></li></ul>
+      <div class="callout"><div class="k">Resultado que buscan</div><p>El progreso que el cliente quiere hacer, no el feature que queremos vender.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PARTES 3 y 4 -->
+<section class="page">
+  <div class="block">
+    <div class="part"><div class="n">3</div><div class="t"><div class="en">What before</div><h3>Qué hacen hoy</h3></div></div>
+    <div class="part-body">
+      <table>
+        <thead><tr><th class="w30">Qué usan hoy</th><th>Dónde duele</th><th>Fuente</th></tr></thead>
+        <tbody>
+          <tr><td class="lead">Alternativa actual 1</td><td>Fricción concreta.</td><td class="pg"><span class="src">p. 8</span></td></tr>
+          <tr><td class="lead">Alternativa actual 2</td><td>Fricción concreta.</td><td class="pg"><span class="inf">inferido</span></td></tr>
+          <tr><td class="lead">No hacen nada</td><td>Qué les cuesta no resolverlo.</td><td class="pg"><span class="src">p. 5</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="block">
+    <div class="part"><div class="n">4</div><div class="t"><div class="en">How</div><h3>Cómo lo resuelve Producto X</h3></div></div>
+    <div class="part-body">
+      <table>
+        <thead><tr><th class="w35">Capacidad (en lenguaje de cliente)</th><th>Qué resuelve</th><th>Estado</th><th>Fuente</th></tr></thead>
+        <tbody>
+          <tr><td class="lead">Capacidad 1</td><td>Beneficio concreto.</td><td>Diseñado</td><td class="pg"><span class="src">p. 9</span></td></tr>
+          <tr><td class="lead">Capacidad 2</td><td>Beneficio concreto.</td><td>Construido y probado</td><td class="pg"><span class="src">p. 12</span></td></tr>
+          <tr><td class="lead">Capacidad 3</td><td>Beneficio concreto.</td><td>Sin confirmar</td><td class="pg"><span class="inf">inferido</span></td></tr>
+        </tbody>
+      </table>
+      <p class="note"><b>Diseño no es producción.</b> La columna «Estado» separa lo que el documento describe de lo que está probado. No se promete lo que no está confirmado.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PARTES 5 y 6 -->
+<section class="page">
+  <div class="block">
+    <div class="part"><div class="n">5</div><div class="t"><div class="en">What after</div><h3>Qué pasa después</h3></div></div>
+    <div class="part-body">
+      <ol class="tight"><li>Primer cambio observable para el cliente. <span class="src">p. 15</span></li><li>Segundo cambio observable. <span class="inf">inferido</span></li><li>Qué se vuelve posible que antes no lo era.</li></ol>
+    </div>
+  </div>
+  <div class="block">
+    <div class="part"><div class="n">6</div><div class="t"><div class="en">Alternatives</div><h3>Alternativas y por qué elegirnos</h3></div></div>
+    <div class="part-body">
+      <table>
+        <thead><tr><th class="w22">Alternativa</th><th>Dónde gana</th><th>Dónde gana Producto X</th></tr></thead>
+        <tbody>
+          <tr><td class="lead">Hacerlo a mano</td><td>Costo cero.</td><td>Respuesta concreta.</td></tr>
+          <tr><td class="lead">Herramienta general</td><td>Ya la usan.</td><td>Respuesta concreta.</td></tr>
+          <tr><td class="lead">Contratar un servicio</td><td>Trato a medida.</td><td>Respuesta concreta.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- STATEMENTS, MENSAJES CLAVE Y SUPUESTOS -->
+<section class="page">
+  <p class="eyebrow">Para marketing</p>
+  <h2>Statement y posicionamiento</h2>
+  <div class="statement"><div class="label">Statement (1–2 frases)</div><p>Frase final que se puede pegar en un titular, sin cifras inventadas.</p></div>
+  <div class="card tint"><div class="k">Posicionamiento</div><p class="pos">Para [quién] que [necesidad], Producto X es [categoría] que [beneficio]. A diferencia de [alternativa], [diferencial].</p></div>
+
+  <h3>Mensajes clave y su prueba</h3>
+  <div class="msg"><div class="num">1</div><div><h4>Mensaje uno</h4><p class="proof"><b>Prueba</b>La evidencia concreta. <span class="src">p. 10</span></p></div></div>
+  <div class="msg"><div class="num">2</div><div><h4>Mensaje dos</h4><p class="proof"><b>Prueba</b>La evidencia concreta. <span class="src">p. 14</span></p></div></div>
+  <div class="msg"><div class="num">3</div><div><h4>Mensaje tres</h4><p class="proof"><b>Prueba</b>Sin prueba disponible todavía. <span class="inf">inferido</span> <b>[A CONSEGUIR]</b></p></div></div>
+
+  <h3>Supuestos a validar</h3>
+  <table>
+    <thead><tr><th>Supuesto</th><th>Cómo se valida</th><th>Riesgo si es falso</th></tr></thead>
+    <tbody>
+      <tr><td class="lead">Segmento líder correcto</td><td>5 conversaciones con clientes reales.</td><td>La landing le habla a quien no compra.</td></tr>
+      <tr><td class="lead">El plazo es el prometido</td><td>Medirlo en producción antes de publicarlo.</td><td>Promesa que no se cumple.</td></tr>
+    </tbody>
+  </table>
+  <p class="colophon"><span class="src">p. N</span> referencia a la fuente · <span class="inf">inferido</span> sin respaldo directo · <b>[A CONSEGUIR]</b> hueco que se completa con una decisión o un dato real.</p>
+</section>
+
+</body>
+</html>
